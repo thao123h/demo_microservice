@@ -38,7 +38,7 @@ public class BookingController {
         Booking booking = bookingRepository.findBookingById(id);
         bookingDetail.setBookingDTO(bookingMapper.toDTO(bookingRepository.findBookingById(id)));
         bookingDetail.setUserDTO(userClient.getUser(booking.getRenterId()));
-        bookingDetail.setItemDTO(itemClient.getItem(booking.getRenterId()));
+        bookingDetail.setItemDTO(itemClient.getItem(booking.getItemId()));
         return bookingDetail;
     }
 
