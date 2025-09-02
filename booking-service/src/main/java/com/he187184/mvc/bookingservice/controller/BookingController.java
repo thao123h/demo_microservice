@@ -2,7 +2,10 @@ package com.he187184.mvc.bookingservice.controller;
 //
 //import com.he187184.mvc.bookingservice.client.ItemClient;
 //import com.he187184.mvc.bookingservice.client.UserClient;
+import com.he187184.mvc.bookingservice.client.ItemClient;
+import com.he187184.mvc.bookingservice.client.UserClient;
 import com.he187184.mvc.bookingservice.dto.BookingDTO;
+import com.he187184.mvc.bookingservice.dto.BookingDetail;
 import com.he187184.mvc.bookingservice.entity.Booking;
 import com.he187184.mvc.bookingservice.mapper.BookingMapper;
 import com.he187184.mvc.bookingservice.repository.BookingRepository;
@@ -16,10 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookingController {
     @Autowired
     private BookingRepository bookingRepository;
-//    @Autowired
-//    private ItemClient itemClient;
-//    @Autowired
-//    private UserClient userClient;
+    @Autowired
+    private ItemClient itemClient;
+    @Autowired
+    private UserClient userClient;
     @Autowired
     private BookingMapper bookingMapper;
     @GetMapping("/get/{id}")
@@ -28,6 +31,15 @@ public class BookingController {
         BookingDTO bookingDTO = bookingMapper.toDTO(booking);
         return bookingDTO;
 
+    }
+    @GetMapping("/get/details/{id}")
+    public BookingDetail getBookingDetails(@PathVariable Integer id) {
+        BookingDetail bookingDetail = new BookingDetail();
+        Booking booking = bookingRepository.findBookingById(id);
+        bookingDetail.setBookingDTO(bookingMapper.toDTO(bookingRepository.findBookingById(id)));
+        bookingDetail.setUserDTO(userClient.getUser(booking.getRenterId()));
+        bookingDetail.setItemDTO(itemClient.getItem(booking.getRenterId()));
+        return bookingDetail;
     }
 
 }
