@@ -28,21 +28,20 @@ public class Booking {
 
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
-
-    @Lob
     private String notes;
 
-    @Lob
     private String cancellationReason;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     public enum Status {
-        PENDING, CONFIRMED, CANCELLED, COMPLETED
+        pending, confirmed, cancelled, completed
+
     }
 
     public enum PaymentStatus {
-        UNPAID, PAID, REFUNDED
+        unpaid, paid, refunded
+
     }
 }
