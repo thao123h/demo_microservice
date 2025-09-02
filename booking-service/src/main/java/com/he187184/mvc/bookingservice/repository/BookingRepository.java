@@ -1,4 +1,7 @@
 package com.he187184.mvc.bookingservice.repository;
 
-public interface BookingRepository {
+import com.he187184.mvc.bookingservice.entity.Booking;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface BookingRepository extends JpaRepository<Booking, Integer> {
 }
