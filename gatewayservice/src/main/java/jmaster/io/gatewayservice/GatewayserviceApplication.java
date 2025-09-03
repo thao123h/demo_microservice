@@ -18,20 +18,17 @@ public class GatewayserviceApplication {
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder, LoggingGatewayFilterFactory loggingFactory) {
         return builder.routes()
-                .route("user-route", r -> r.path("/user/**")
-                        .filters(f -> f.stripPrefix(1)
-                                .filter(loggingFactory.apply(new LoggingGatewayFilterFactory.Config()))
-                                .circuitBreaker(c -> c.setName("CircuitBreaker")
-                                        .getFallbackUri()))
-                        .uri("lb://account-service"))
 
-                .route("report-route", r -> r.path("/report/**")
+                .route("user-route", r -> r.path("/users/**")
                         .filters(f -> f.stripPrefix(1))
-                        .uri("lb://statistic-service"))
+                        .uri("lb://user-service"))
 
-                .route("notification-route", r -> r.path("/notification/**")
+                .route("item-route", r -> r.path("/items/**")
                         .filters(f -> f.stripPrefix(1))
-                        .uri("lb://notification-service"))
+                        .uri("lb://item-service"))
+                .route("booking-route", b -> b.path("/bookings/**")
+                        .filters(f -> f.stripPrefix(1))
+                        .uri("lb://booking-service"))
 
                 ///swagger ui
                 .route("openapi", r -> r.path("/v3/api-docs/**")
